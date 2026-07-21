@@ -2,7 +2,8 @@
 
 ## State
 
-`in_progress` — claimed for a six-claim, CPU-only clean-room verification.
+`publication_queued` — full local gate passed and public GitHub handoff is
+complete; the shared drain is the only Hugging Face publisher.
 
 ## Source and scope
 
@@ -28,8 +29,19 @@
 6. Exhaustively map 1-bounded K-OPSD arrivals to sleeping-bandit availability
    sets and compare gain/regret definitions.
 
+## Completed gate
+
+- Pinned source archive and SHA-256 are retained under `source/` and `outputs/`.
+- The clean-room executable has 2/2 tests passing and retains raw claim output.
+- C1, C4, C5, and C6 have source-rule checks; C2 and C3 are explicitly
+  falsified with destructive controls rather than misreported as verified.
+- Trackio has the required index, per-claim pages, Methods, Negative controls,
+  and Conclusion; captured commands are relative.
+- Public GitHub commit is `e6dca3f917fecff47bffe7f88d3056970ec89e00`.
+
+FULL_GATE_READY: rZTiFcDihH
+
 ## Next action
 
-Fetch and hash the author source, transcribe only the necessary algorithms,
-then establish source-equivalent and independent-oracle tests before running
-full finite sweeps.
+The canonical enqueue handoff is next. Do not create or publish a Hugging Face
+Space directly; wait for the shared drain and then verify its public readback.

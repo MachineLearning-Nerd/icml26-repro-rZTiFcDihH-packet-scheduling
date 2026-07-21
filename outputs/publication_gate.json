@@ -1,0 +1,16 @@
+{
+  "paper": "rZTiFcDihH",
+  "tests_passed": true,
+  "publication_gate_passed": true,
+  "source": "arXiv:2606.00835v1",
+  "source_mode": "clean-room; no author implementation was released",
+  "claims": {
+    "C1": "finite source-rule check passed",
+    "C2": "falsified by retained independent offline-oracle counterexample",
+    "C3": "falsified by pinned source-domain contradiction",
+    "C4": "source-rule check passed",
+    "C5": "source-rule check passed",
+    "C6": "finite reduction check passed"
+  },
+  "git_commit": "e6dca3f917fecff47bffe7f88d3056970ec89e00"
+}
