@@ -1,0 +1,176 @@
+\documentclass{article}
+\newcommand{\hmmax}{0}
+\newcommand{\bmmax}{0}
+\usepackage[accepted]{icml2026}
+%%ICML block
+% Recommended, but optional, packages for figures and better typesetting:
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{booktabs} % for professional tables
+
+% hyperref makes hyperlinks in the resulting PDF.
+% If your build breaks (sometimes temporarily if a hyperlink spans a page)
+% please comment out the following usepackage line and replace
+% \usepackage{icml2026} with \usepackage[nohyperref]{icml2026} above.
+\usepackage{hyperref}
+
+% Attempt to make hyperref and algorithmic work together better:
+\usepackage{algorithmic} 
+\usepackage{algorithm}
+%\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts  
+\usepackage{url}            % simple URL typesetting
+%\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+%\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{caption}
+\usepackage{makecell}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{dsfont}
+\usepackage{colortbl}
+\usepackage{enumitem}
+\usepackage{bbm}
+\usepackage{titlesec}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{multirow,booktabs}
+\usepackage[table]{xcolor}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{wrapfig}
+\usepackage{enumitem}  
+\usepackage{setspace}
+\usepackage{calc}
+\usepackage{multicol}
+\usepackage{mathtools}
+\usepackage{cancel}
+\usepackage{tikz}
+%\usepackage[retainorgcmds]{IEEEtrantools}
+\newlength{\tabcont}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+\usepackage{framed}
+\usepackage[most]{tcolorbox}
+\usepackage{xspace}
+\colorlet{shadecolor}{orange!15}
+
+
+% CUSTOM COMMANDS
+\newcommand{\opt}{\texttt{OPT}\@\xspace}
+\newcommand{\alg}{\texttt{ALG}\@\xspace}
+\newcommand{\algs}{\texttt{ALG}$_s$\@\xspace}
+\newcommand{\algedflearn}{$\mathtt{EDF}_{\Phi}^{L}$\@\xspace}
+\newcommand{\algrtwo}{\texttt{ALG}$^{R2}$\@\xspace}
+\newcommand{\algrs}{\texttt{ALG}$^{Rs}$\@\xspace}
+\newcommand{\adv}{\texttt{ADV}\@\xspace}
+\newcommand{\algtheta}{\texttt{ALG}$^{\theta}$\@\xspace}
+\newcommand{\algthetalearn}{\texttt{ALG}$^{\theta, U}$\@\xspace}
+\newcommand{\Galg}{G_{\text{\alg}}}
+\newcommand{\Gopt}{G_{\text{\opt}}}
+\newcommand{\Gadv}{G_{\text{\adv}}}
+\newcommand{\Galgrtwo}{G_{\text{\algrtwo}}}
+\newcommand{\Galgtheta}{G_{\text{\algtheta}}}
+\newcommand{\Galgthetalearn}{G_{\text{\algthetalearn}}}
+\newcommand{\Galgrs}{G_{\text{\algrs}}}
+\newcommand{\Galgs}{G_{\text{\algs}}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\makeatletter
+\newcommand*{\textoverline}[1]{$\overline{\hbox{#1}}\m@th$}
+\makeatother
+\newcommand{\stretchasneed}{}
+\newcommand{\phat}{\widehat{p}_{a_t b_t, t}}
+\newcommand{\qhat}{\widehat{q}_{a_t b_t, t}}
+\newcommand{\ucba}{UCB_{a_t, t}}
+\newcommand{\ucbb}{UCB_{b_t, t}}
+\newcommand{\ucbaopt}{UCB_{a_t^*, t}}
+\newcommand{\ucbbopt}{UCB_{b_t^*, t}}
+\newcommand{\lcba}{LCB_{a_t, t}}
+\newcommand{\lcbb}{LCB_{b_t, t}}
+\newcommand{\lcbaopt}{LCB_{a_t^*, t}}
+\newcommand{\lcbbopt}{LCB_{b_t^*, t}}
+\newcommand{\betaa}{\beta_{a_t, t}}
+\newcommand{\betab}{\beta_{b_t, t}}
+\newcommand{\betaaopt}{\beta_{a_t^*, t}}
+\newcommand{\betabopt}{\beta_{b_t^*, t}}
+
+\newcommand{\achraf}[2]{\textcolor{magenta}{[Achraf: #1]}}
+
+\input{settings/pkgs}
+\input{settings/environments}
+\input{settings/colors}
+
+\allowdisplaybreaks
+
+\icmltitlerunning{Online Packet Scheduling with Deadlines and Learning}
+
+\begin{document}
+
+\twocolumn[
+  \icmltitle{Online Packet Scheduling with Deadlines and Learning}
+
+  % It is OKAY to include author information, even for blind submissions: the
+  % style file will automatically remove it for you unless you've provided
+  % the [accepted] option to the icml2026 package.
+
+  % List of affiliations: The first argument should be a (short) identifier you
+  % will use later to specify author affiliations Academic affiliations
+  % should list Department, University, City, Region, Country Industry
+  % affiliations should list Company, City, Region, Country
+
+  % You can specify symbols, otherwise they are numbered in order. Ideally, you
+  % should not use this facility. Affiliations will be numbered in order of
+  % appearance and this is the preferred way.
+  %\icmlsetsymbol{equal}{*}
+
+  \begin{icmlauthorlist}
+    \icmlauthor{Gianmarco Genalti}{polimi}
+    \icmlauthor{Achraf Azize}{ensae}
+    \icmlauthor{Vianney Perchet}{ensaecriteo}
+    %\icmlauthor{}{sch}
+    %\icmlauthor{}{sch}
+  \end{icmlauthorlist}
+\icmlaffiliation{polimi}{Politecnico di Milano}
+  \icmlaffiliation{ensae}{FairPlay Joint Team, CREST, ENSAE, IP Paris}
+  \icmlaffiliation{ensaecriteo}{FairPlay Joint Team, CREST, ENSAE, IP Paris, CRITEO AI Team}
+
+  \icmlcorrespondingauthor{Gianmarco Genalti}{gianmarco.genalti@polimi.it}
+  % You may provide any keywords that you find helpful for describing your
+  % paper; these are used to populate the "keywords" metadata in the PDF but
+  % will not be shown in the document
+  \icmlkeywords{online scheduling, competitive analysis, bandits, deadlines, regret}
+
+  \vskip 0.3in
+]
+\printAffiliationsAndNotice{} 
+
+
+\input{sections/0_abstract}
+\input{sections/1_introduction}
+%\input{sections/challenges}
+\input{sections/2_problem_formulation}
+%\input{sections/2b_existing_results}
+\input{sections/3_deterministic_algorithms}
+\input{sections/4_randomized_algorithms}
+\input{sections/5_discussion}
+\input{sections/6_simulations}
+\newpage
+\section*{Acknowledgements}
+VP’s research was supported in part by the French National Research Agency (ANR) in the framework of the PEPR IA FOUNDRY project (ANR-23-PEIA-0003) and through the grant DOOM ANR-23-CE23-0002. It was also funded by the European Union (ERC, Ocean, 101071601).
+\section*{Impact Statement}
+This paper presents work whose goal is to advance the field of Machine
+Learning. There are many potential societal consequences of our work, none
+which we feel must be specifically highlighted here.
+\bibliography{biblio}
+\bibliographystyle{icml2026}
+\newpage
+\appendix
+\onecolumn
+\input{sections/proofs}
+\end{document}
+

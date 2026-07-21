@@ -1,0 +1,117 @@
+{
+  "C1_edf_phi": {
+    "cells": 793,
+    "finite_certificate_pass": true,
+    "max_ratio": 1.2857142857142858,
+    "phi": 1.618033988749895
+  },
+  "C2_theta_competitive": {
+    "cells": 793,
+    "max_ratio": 1.6,
+    "outcome": "falsified",
+    "theta_system": [
+      {
+        "k": 2,
+        "residual": 8.881784197001252e-16,
+        "theta": 1.414213562373095
+      },
+      {
+        "k": 3,
+        "residual": 0.0,
+        "theta": 1.5
+      },
+      {
+        "k": 4,
+        "residual": -1.7763568394002505e-15,
+        "theta": 1.5391888728108891
+      },
+      {
+        "k": 5,
+        "residual": -3.552713678800501e-15,
+        "theta": 1.5615528128088303
+      },
+      {
+        "k": 6,
+        "residual": -2.1316282072803006e-14,
+        "theta": 1.5758985463772528
+      },
+      {
+        "k": 7,
+        "residual": -8.526512829121202e-14,
+        "theta": 1.585786437626905
+      },
+      {
+        "k": 8,
+        "residual": 3.126388037344441e-13,
+        "theta": 1.5929354086909484
+      }
+    ],
+    "theta_system_pass": true,
+    "violations": [
+      {
+        "algorithm_gain": 5.0,
+        "offline_gain": 8.0,
+        "packets": [
+          [
+            1,
+            1,
+            1.0,
+            2
+          ],
+          [
+            1,
+            2,
+            1.0,
+            2
+          ],
+          [
+            2,
+            2,
+            1.0,
+            2
+          ],
+          [
+            2,
+            3,
+            2.0,
+            1
+          ],
+          [
+            3,
+            3,
+            2.0,
+            1
+          ],
+          [
+            3,
+            4,
+            3.0,
+            0
+          ]
+        ],
+        "ratio": 1.6,
+        "theta": 1.5,
+        "types": 3
+      }
+    ]
+  },
+  "C3_theta_learning_lower_bound": {
+    "outcome": "falsified",
+    "reason": "source lower-bound proof uses unbounded Gaussian rewards although the model restricts X_p to [0,1]",
+    "source_domain_mismatch": true
+  },
+  "C4_randomized_R2": {
+    "p_hat_cells": 100,
+    "probability_range_pass": true,
+    "source_ratio": "5/4"
+  },
+  "C5_randomized_Rs": {
+    "selection_cells": 8704,
+    "source_ratio": 1.5819767068693265,
+    "threshold_pass": true
+  },
+  "C6_sleeping_bandit_reduction": {
+    "availability_cells": 120,
+    "bijection_pass": true
+  }
+}

@@ -1,0 +1,183 @@
+\section{Instance-Dependent Guarantees in $2$ and $3$-bounded $K$-OPSD} 
+It is known that a greedy (w.r.t. to deadlines) algorithm can always obtain a competitive ratio of $2$, for every $s>1$  \cite{hajek2001competitiveness}. However, it is possible to improve this value by slightly modifying the greedy algorithm. We recall the $\beta$-Ratio Earliest Deadline First (\texttt{EDF}$_\beta$) algorithm \citep{kesselman2001buffer}. If $h_t$ is the heaviest packet in $\mathcal{B}_t$, this algorithm schedules the packet $f_t$ with the earliest deadline s.t. $\beta f_t \ge h_t$. This family of algorithms is also called \textit{thresholding} algorithms, since the decision is only taken by scanning the packets in a deadline-ordered fashion until a threshold is exceeded. 
+
+We show that a simple adaptation of \texttt{EDF}$_\beta$ achieves $\Phi$-no-regret in $2$ and $3$-bounded $K$-OPSD.
+In particular, we show that combining the optimism in the face of the uncertainty principle with the \texttt{EDF}$_\Phi$ algorithm, it is possible to obtain both instance-dependent and worst-case $\Phi$-regret bounds. We call \algedflearn the resulting algorithm, and we report its pseudocode in Algorithm \ref{alg:alg_edflearn}. At every round, the algorithm identifies the packet type in the buffer with the largest UCB, \emph{i.e.}, $h_t = \max_{h \in \mathcal{B}_t} UCB_{h,t}$, and then sends the smallest deadline packet $f_t$ s.t. 
+$$
+ f_t \in \argmin_{f \in \mathcal{B}_t \text{ s.\,t.}\ \Phi UCB_{f,t} \ge UCB_{h,t}} \{d_f\}.
+$$
+\begin{algorithm}[!t]
+\caption{\algedflearn}
+\label{alg:alg_edflearn}
+\small
+\begin{algorithmic}[1]
+    \FOR{$t \in [T]$}
+        \STATE Receive new packets, identify $h_t = \max_{h \in \mathcal{B}_t} UCB_{h,t}$.
+        \STATE Schedule $f_t \in \argmin_{f \in \mathcal{B}_t \text{ s.\,t.}\ \Phi UCB_{f,t} \ge UCB_{h,t}} \{d_f\} $
+    \ENDFOR
+\end{algorithmic}
+\end{algorithm}
+In stochastic MABs, it is possible to provide \textit{instance-dependent} guarantees on the regret that depend on the time horizon $T$ and on the reward-generating distributions, in particular on the sub-optimality gaps. In Sleeping MABs, it is possible to upper bound the regret of \texttt{AUER} as $\mathcal{O}\left(\sum_{i=1}^{K-1} \frac{\ln T}{\Delta_{i,i+1}}\right)$, which is tight \cite{kleinberg2010regret}. These types of guarantees are interesting because they provide additional insights on which situations are harder to deal with for an algorithm.
+In the following proposition, we bound the $\Phi$-regret of \algedflearn in both an instance-dependent and worst-case fashion. 
+\begin{restatable}[$\Phi$-regret of \algedflearn]{proposition}{algedflearnBound}
+\label{prop:reduction}
+    In $2$-bounded and $3$-bounded $K$-OPSD instances, \algedflearn suffers an expected cumulative $\Phi$-regret bounded as 
+    \begin{align*}
+    R_{\Phi,T}^{\text{\algedflearn}}
+    \;\le\;
+    % \mathcal{O}\!\left(
+    %   \sum_{\substack{i,j \in [K]\\[1pt] \min\{\Delta_{i,j},\,\Delta_{i,j}^{\Phi}\} > 0}}
+    %   \frac{\ln T}{
+    %     \min\{\Delta_{i,j},\,\Delta_{i,j}^{\Phi}\}
+    %   }
+    % \right),
+    \mathcal{O}\left(K\sum_{i =1}^{K - 1} \frac{\ln T}{\Delta_{i, i+1}} + \sum_{\substack{i,j \in [K]\\ \Delta_{i,j}^\Phi > 0}} \frac{\ln T}{\Delta_{i,j}^\Phi}\right),
+\end{align*}
+    where $\Delta_{i,j}^{\Phi} \coloneqq |\mu_i-\Phi\mu_j|$.
+    Alternatively, the $\Phi$-regret can be bounded as
+    \begin{align*}
+        R_{\Phi,T}^{\text{\algedflearn}} \le \widetilde{\mathcal{O}}\left(\sqrt{KT}\right).
+    \end{align*}
+\end{restatable}
+The first addendum of the instance-dependent bound is in the same order as the instance-dependent bound of \texttt{AUER}. The second addendum is a  similar complexity term that features a $\Phi$-scaled version of the sub-optimality gaps between the types. The worst-case bound shows how \algedflearn achieves a $\Phi$-regret which is bounded in the same order as the regret of \texttt{AUER}.
+% \textit{Proof Sketch.} The result is proven for $3$-bounded instances, as every $2$-bounded instance is also $3$-bounded. We leverage a \textit{charging scheme}, ensuring that every gain of \opt is (partially) compensated by a gain in \algedflearn. In particular, let $j_t$ be the packet scheduled by \opt and $f_t$ be the packet scheduled by \algedflearn in $t$: if $j_t$ has been scheduled by \algedflearn before $t$ then we charge it to its copy; else, we charge $j_t$ to $f_t$. $f_t$ receives at most two charges and the proof proceeds by case. 
+
+% We work under the good event in which all confidence intervals contain the true mean, that holds for every $t$ and every packet type simultaenously with probability $1-\frac{1}{T}$.
+
+% For example, when $f_t$ is only charged once:
+% \begin{itemize}
+%     \item It can be from its copy scheduled by \opt in the future (in this case, the instantaneous $\Phi$-regret can be bounded with $0$)
+%     \item It can be from $j_t$. In this case $j_t \in \mathcal{B}_t$ and $ \Phi UCB_{j_t,t} < UCB_{h_t,t}$, since the schedule of \opt can always be assumed ordered w.r.t. to deadlines, without loss of generality. The competitive ratio is clearly bounded by $\Phi$. However we only pay regret when $f_t$ is selected while $j_t>f_t$. To see this:
+%     \begin{itemize}
+%         \item If $ j_t \le f_t$, we have $j_t - \Phi f_t \le 0$ and no instanteous regret is accrued.
+%         \item If $j_t > f_t$, we need to bound $j_t - \Phi f_t \le UCB_{j_t,t} - \Phi f_t \le UCB_{h_t,t}- \Phi f_t \le \Phi (UCB_{f_t,t}-f_t) \le \Phi \beta_{f_t,t}$.
+%     \end{itemize}
+% \end{itemize}
+% It is easy to see that the second scenario can only happen while $j_t > f_t$ and $UCB_{j_t,t} < UCB_{f_t,t}$. This event can only happen at most $Q_{i,j} \le \mathcal{O}\left( \frac{\ln T}{\Delta_{i,j}^2}\right)$ times (Lemma \ref{lem:bound_comparison}). Taking a summation of $\beta_{f_t,t}$ over these $Q_{i,j}$ rounds, we can easily upper bound
+% $$
+% \sum_{n=1}^{Q_{i,j}} \beta_{f_t,t} \le \mathcal{O}\left(\sum_{n=1}^{Q_{i,j}} \sqrt{\frac{\ln T}{n}}\right) \le \mathcal{O}\left(\sqrt{Q_{i,j}}\right) \le \mathcal{O}\left(\frac{\ln T}{\Delta_{i,j}}\right) \le \mathcal{O}\left(\frac{\ln T}{\Delta_{i,j}^\Phi}\right)
+% $$
+% When $f_t$ is charged twice the argument is more complex but shares the same core ideas, the main difference is that the instantaneous regret must be directly bounded with $\Delta_{i,j}^\Phi$. Summing over all couples of packet types, we obtain the first bound. The second bound can be obtained by using Jensen inequality. Let $N_{f,T}$ be the number of times \algedflearn pays instantaneous regret in this scenario by scheduling $f$. Then $\sum_{f \in[K]} N_{f,T} \le T$ and
+% $$
+% \sum_{f \in [K]} \sum_{n=1}^{N_{f,T}} \beta_{f,t_{f,n}} \le \widetilde{\mathcal{O}}\left( \sum_{f \in [K]}\sqrt{N_{f,T}} \right) \le \widetilde{\mathcal{O}}\left(\sqrt{KT}\right).
+% $$
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Improving the $\Phi$ Competitive Ratio in $2$-Bounded $K$-OPSD}
+\label{sec:twoboundeddet}
+In this section, we focus on $2$-bounded instances. Our goal is to provide an algorithm that improves the performance of \algedflearn in $2$-bounded $K$-OPSD instances. Thus, our focus will be on the competitive ratio.
+An idea that may naturally arise is to exploit the fact that there are only $K$ finite weight types.
+In bounded-delay packet scheduling, the lower bound of $\Phi$ for the competitive ratio is proven using an instance with infinitely many different packet weights. 
+In our $K$-OPSD learning setting, having $K = \infty$ is unreasonable, as the regret in bandits scales with $\sqrt{K}$ even in the classic setting without deadlines, making the problem non-learnable. 
+
+\subsection{Breaking the $\Phi$ Barrier in $2$-Bounded OPSD, without learning.} 
+
+\begin{algorithm}[!t]
+\caption{\algtheta}
+\label{alg:alg_theta}
+\small
+\begin{algorithmic}[1]
+    \REQUIRE Number of types $K$.
+    \STATE Solve the system \eqref{eq:system}, get $(\theta_K, x_1, \ldots, x_{K - 1})$, and set $j \leftarrow 0$\label{line:system}
+    \FOR{$t \in [T]$}
+        \STATE Receive new packets and update $V_t$ and $B_t$
+        \STATE Identify $b_t$ and $v_t$ \label{line:identify}
+        \IF{$v_t < \frac{x_{j}}{x_{j+1}} b_t$}
+            \STATE Schedule $b_t$
+            \STATE $j \leftarrow 0$  \label{line:restart_1}
+        \ELSE
+            \STATE Schedule $v_t$
+            \STATE $j \leftarrow 
+            \begin{cases}
+              j+1, & \text{if } v_t \le b_t,\\
+              0, & \text{otherwise. } 
+            \end{cases}$
+            \label{line:restart_2}
+        \ENDIF
+    \ENDFOR
+\end{algorithmic}
+\end{algorithm}
+We introduce \algtheta, an algorithm achieving $\theta_K$-competitive ratio, breaking the $\Phi$ barrier for the competitive ratio when only $K$ types of packets are available. 
+We start by introducing the following system of equations, which will play a key role in the algorithm and its analysis. Let $x_0 = 1$
+\begin{equation}
+\label{eq:system}
+\begin{cases}
+    x_0 = 1, \quad x_1 = \frac{1}{\theta-1}, \\[6pt]
+    x_j = \frac{\theta+1}{\theta-1}(x_{j-1} - x_{j-2}), & 2 \le j \le K-1, \\[6pt]
+    x_{K-1} = (\theta+1)x_{K-2}
+\end{cases}
+\end{equation}
+Equations \eqref{eq:system} have been used in \citet{hajek2001competitiveness} to prove the $\Phi$ lower bound for the competitive ratio. Indeed, the author proves that there exists a unique nonnegative solution $(\theta_K, x_1, \ldots, x_{K - 1})$, where $\theta_K \rightarrow \Phi$ as $K$ goes to infinity. For example, when $K=2$, we have $\theta_2=\sqrt{2}\approx 1.41$, and for $K=3$ we have $\theta_3 = \frac{3}{2}=1.5$. Then the value progressively increases approaching $\Phi\approx 1.618$. 
+
+In Algorithm \ref{alg:alg_theta} we report the pseudocode of \algtheta. As a first step, given $K$, \algtheta solves the system \eqref{eq:system} before the trial, then it operates in epochs. \algtheta keeps track of the number of rounds $j$ passed since the current epoch started.
+
+At time $t$, \algtheta receives new packets and identifies $v_t \in V_t$ and $b_t \in B_t$ as the heaviest packets in the algorithm's buffer with deadlines $t$ and $t+1$, respectively. The scheduling rule is the following: if $v_t < \frac{x_{j}}{x_{j+1}}b_t$ then schedule $b_t$, else schedule $v_t$. The epoch can terminate (setting $j = 0$) in two ways: either $b_t$ is scheduled, or $v_t$ is scheduled and $v_t \ge b_t$.
+
+Note that \algtheta needs to know $K$, but not the actual values of the $K$ weights involved in advance. Also, $v_{t+j}$ is always guaranteed to exist in \algtheta buffer due to the epoch termination condition. The following proposition upper bounds the competitive ratio of \algtheta.
+\begin{restatable}[$\theta_K$- Competitive Ratio for \algtheta]{proposition}{upperboundtheta}
+\label{prop:upperboundtheta}
+In $2$-bounded $K$-OPSD instances, \algtheta satisfies
+    $$
+     \Gopt \le \theta_K \Galgtheta.
+    $$
+\end{restatable}
+Proposition \ref{prop:upperboundtheta} shows that, in the case of at most $K$ distinct types of packets, improving over the well-established $\Phi$ competitive ratio is possible. This result is of independent interest, as the scenario with $K$ types has never been explored in the literature of online packet scheduling with bounded deadlines. Also, the lower bound construction from~\citep{hajek2001competitiveness} implies the tightness of this result.
+
+% Theorem \ref{thr:lowerbound} implies that \algtheta is worst-case optimal in this scenario.
+
+\subsection{$\theta_K$-regret Upper Bound for 2-Bounded Delay $K$-OPSD, with learning.} The algorithmic idea underlying \algtheta can be simply extended to the learning scenario, \emph{i.e.} by using UCBs instead of the actual weights. 
+We now define $v_t$ and $b_t$ according to their UCBs, \emph{i.e.} $v_t \in \argmax_{v \in V_t} UCB_{v,t}$ and $b_t \in \argmax_{b \in B_t} UCB_{b,t}$. 
+We call \algthetalearn the resulting algorithm, which operates as \algtheta using weights' estimates. In Algorithm \ref{alg:alg_theta_learn}, we report the pseudocode of \algthetalearn.
+\begin{algorithm}[t!]
+\caption{\algthetalearn}
+\label{alg:alg_theta_learn}
+\small
+\begin{algorithmic}[1]
+    \REQUIRE Number of types $K$.
+    \STATE Solve the system \eqref{eq:system}, get $(\theta_K, x_1, \ldots, x_{K - 1})$, and initialize $x_0 \leftarrow 1$, $x_K \gets x_{K-1}$ and $j \leftarrow 0$.
+    \FOR{$t \in [T]$}
+    \IF{j = 0}
+        \STATE Compute UCBs for every packet type, obtaining $\{UCB_{i,t}\}_{i\in [K]}$
+    \ENDIF
+        \STATE Receive new packets and update $V_t$ and $B_t$
+        \STATE Identify $v_t \in \argmax_{v \in V_t}\{\mathrm{UCB}_{v,t}\}$ 
+        \STATE Identify $b_t \in \argmax_{b \in B_t} \{\mathrm{UCB}_{b,t}\}$
+        \IF{$UCB_{v_t,t} < \frac{x_{j}}{x_{j+1}} UCB_{b_t,t}$}
+            \STATE Schedule $b_t$
+            \STATE $j \leftarrow 0$ 
+        \ELSE
+            \STATE Schedule $v_t$
+            \STATE $j \leftarrow 
+            \begin{cases}
+              j+1, & \text{if } UCB_{v_t,t}\le UCB_{b_t,t},\\
+              0, & \text{otherwise}
+            \end{cases}$
+        \ENDIF
+    \ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+With the following result, we prove that \algthetalearn achieves a tight $\theta_K$-regret bound w.r.t. to the lower bound presented in Theorem \ref{thr:lowerbound}.
+\begin{restatable}[Upper Bound on the $\theta_K$-regret of \algthetalearn]{theorem}{upperboundthetalearn}
+\label{thr:upperbound_thetalearn}
+For every instance of the stochastic $K$-types packet scheduling problem, we have
+    $$
+    \mathbb{E}[\Gopt] \le \theta_K \mathbb{E}[\Galgthetalearn] + \widetilde{\mathcal{O}}\left(\sqrt{KT}\right).
+    $$
+\end{restatable}
+\textit{Proof Idea.} The proof builds on the proof of Proposition \ref{prop:upperboundtheta}. In fact, it can be conducted in almost the same way noticing the the gain of \opt inside an epoch can be upper bounded by the UCB of the gain of \alg inside the same. Then, it is only needed to upper bound the sum of the confidence bounds in the same way as the proof of Proposition \ref{prop:reduction}. The full proof can be found in Appendix \ref{apx:proofs}.
+
+This result closes the problem of learning in $2$-bounded packet scheduling problems with deterministic algorithms, providing a matching $\theta_K$-regret upper bound to the lower bound of Theorem \ref{thr:lowerbound}. Note that this result strictly improves the one in Proposition \ref{prop:reduction}.
+
+\subsection{Regret Lower Bound.} We provide a lower bound on the $\theta_K$-regret for the stochastic $K$-OPSD problem.
+\begin{restatable}[Lower Bound for $\theta_K$-regret]{theorem}{lowerbound}
+\label{thr:lowerbound}
+In $2$-bounded $(K+1)$-OPSD instances, every \alg must satisfy
+    $$
+     \mathbb{E}[\Gopt]- \theta_K \mathbb{E}[G_{\text{\texttt{ALG}}}] \ge \Omega\left(\sqrt{T}\right).
+    $$
+\end{restatable}
+% Lemma \ref{thr:lowerbound} implies that it might be possible to perform learning with a competitive ratio strictly smaller than $\Phi$ (actually, $\theta_K \in [\sqrt{2}, \Phi)$ and increases as $K$ grows from $2$ to infinity). 
+
+% \textit{Proof Idea.} The starting construction is the one where the $K$ weights are the solution to Equation \eqref{eq:system}, which already enforces a competitive ratio of $\theta_K$. Then we create alternative instances where the weights are stochastically perturbed in opposite ways. We show that learning to distinguish between the instances requires $\Omega\left(\sqrt{T}\right)$ regret for every possible algorithm.
+Theorem \ref{thr:lowerbound} implies that \algtheta is worst-case nearly-optimal in this scenario. This result is of particular interest because there are few examples of lower bounds for $\alpha$-regret. The technical challenge mainly relies on deviating from the lower bound construction for the competitive ratio: the instance used by \cite{hajek2001competitiveness} is built in a way that, no matter what the algorithm does, the competitive ratio is always exactly $\Phi$. The construction can be adapted, via an early stopping, to get a $\theta_K$ lower bound, but this competitive ratio is always tightly achieved, no matter what the algorithm does. Any modification to the construction yields a situation in which there exists a simple thresholding rule for which the competitive ratio ends up being higher than $\theta_K$. We solved this problem by a \textit{signed-perturbation}, that forces any algorithm, even with adversarially chosen thresholding logics, to $\theta_K$-alpha regret.

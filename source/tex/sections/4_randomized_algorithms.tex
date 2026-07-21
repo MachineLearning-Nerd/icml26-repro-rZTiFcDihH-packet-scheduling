@@ -1,0 +1,91 @@
+\section{Randomized Algorithms for the $K$-OPSD Problem}
+\label{sec:randomization}
+In this section, we focus on \textit{randomized} algorithms. Randomized algorithms have been studied less than their deterministic counterparts in the packet scheduling literature. However, these algorithms can achieve better worst-case theoretical guarantees in systems allowing for randomization. Note that the performance of a randomized algorithm cannot really be compared to that of the deterministic algorithm, because randomization makes the adversary \textit{weaker}, as it removes the possibility of perfectly predicting the algorithm's next move. Indeed, even if an algorithm takes random decisions, an adversary that knows its random bits could, in principle, behave as if the algorithm is deterministic.
+
+In the OPSD literature, no algorithm matches the $\frac{5}{4}$ competitive ratio lower bound for randomized algorithms. In the $2$-bounded case, the algorithm from \citep{chin2006online} achieves a tight $\frac{5}{4}$. When $s$ is arbitrary, the known lower bound for the competitive ratio in $s$-bounded instances is still $\frac{5}{4}$ \citep{chin2003online}, and the best known algorithm can achieve $\frac{e}{e-1}$ for every $s$ \citep{chin2006online}.
+
+\subsection{Achieving $\frac{5}{4}$-no-regret in $2$-bounded $K$-OPSD.} 
+We start by providing a randomized algorithm with $\frac{5}{4}$-no-regret guarantees for $2$-bounded $K$-OPSD. We use the same notation as in the previous sections. For every time $t \in [T]$ and couple of types $a,b \in [K]$, consider the following:
+\begin{equation*}
+%\label{eq:p_hat}
+    \widehat{p}_{ab, t} = \begin{cases}
+    \begin{aligned}
+        &\max \left\{\frac{4UCB_{a,t}}{5LCB_{b,t}}, \frac{1}{5}\right\}, ~~~UCB_{a,t}\le LCB_{b,t} \\
+        &\frac{4}{5}, ~~~UCB_{a,t}> LCB_{b,t} \text{ and } LCB_{a,t}\le UCB_{b,t} \\
+        &1, ~~~~ LCB_{a,t} > UCB_{b,t}
+    \end{aligned}
+    ~.
+    \end{cases}
+\end{equation*}
+
+\begin{algorithm}[t!]
+\caption{\algrtwo}
+\label{alg:alg_rtwo}
+\small
+\begin{algorithmic}[1]
+    \FOR{$t \in [T]$}
+        \STATE Compute UCBs and LCBs for every packet type, obtaining $\{UCB_{i,t}\}_{i\in [K]}$ and $\{LCB_{i,t}\}_{i\in [K]}$
+        \STATE Receive new packets and update $B_t$ and $V_t$ \\
+        \STATE Identify $a_t \in \argmax_{a \in  V_t}UCB_{a,t}$ 
+        \STATE Identify $b_t \in \argmax_{b \in B_t} \mathrm{UCB}_{b,t}$
+        \IF{$\exists i \in \{a_t,b_t\}$ s.t. $N_{i} \le 50\ln T$}
+            \STATE Schedule $i_t \in \argmin_{i \in \{a_t,b_t\}} \{N_{i,t}\}$
+        \ELSE
+            \STATE Compute $\widehat{p}_{a_t b_t, t}$
+            \STATE Schedule $a_t$ with probability $\widehat{p}_{a_t b_t, t}$, else schedule $b_t$
+        \ENDIF
+    \ENDFOR
+\end{algorithmic}
+\end{algorithm}
+Our algorithm, namely \algrtwo, whose pseudocode is reported in Algorithm \ref{alg:alg_rtwo}, works as follows: at round $t$, it selects $a_t \in \argmax_{a \in V_t} UCB_{a,t}$ and $b_t \in \argmax_{b \in B_t} UCB_{b,t}$. Then, send a packet of type $a_t$ with probability $\widehat{p}_{a_t b_t, t}$, otherwise send a packet of type $b_t$ (with probability $\widehat{q}_{a_t b_t, t} = 1-\widehat{p}_{a_t b_t, t}$). 
+%Note that when a packet of type $i$ is sent, it is always the packet of that type having the earliest deadline and this generates no ambiguities: for this reason, from this moment onwards, we will call the selected packets directly with their type, \emph{i.e.}, packets $a_t$ and $b_t$. 
+The algorithm also performs a \textit{burn-in period}, in which for the first $50\log T$ times a packet is selected as $a_t$ or $b_t$, it is automatically scheduled.
+
+Finally, we state the main result of this section.
+\begin{restatable}[Upper Bound for the $\frac{5}{4}$-regret of \algrtwo]{theorem}{upperboundlearnrandomtwo}
+\label{thr:upperboundrtwo}
+    In $2$-bounded $K$-OPSD instances where randomization is allowed, \algrtwo satisfies
+    \begin{equation}
+        \mathbb{E}[\Gopt] \le \frac{5}{4} \mathbb{E}[\Galgrtwo] + \widetilde{\mathcal{O}}\left(\sqrt{KT}\right).
+    \end{equation}
+\end{restatable}
+This result shows that randomization can be effectively leveraged in the $2$-bounded $K$-OPSD problem to attain $\alpha$-no-regret guarantees with the best known competitive ratio of $\frac{5}{4}$. It remains an open question whether the $K$ types assumption can be exploited to obtain a further sharpened bound with a competitive ratio smaller than $\frac{5}{4}$ (as we did for deterministic algorithms in Section \ref{sec:twoboundeddet}). 
+
+\subsection{Achieving $\frac{e}{e-1}$-regret in $s$-bounded $K$-OPSD.} We now extend our results on randomized algorithms by providing a randomized algorithm with $\frac{e}{e-1}$-no-regret guarantees for the $s$-bounded $K$-OPSD problem (note, $\frac{e}{e-1}\approx 1.582 < \Phi$), for any arbitrary $s \in \mathbb{N}$. We follow the notation introduced in the previous sections. Let $\underline{h}_t \in \argmax_{h \in \mathcal{B}_t} LCB_{h,t}$ be the packet having the largest LCB in the buffer and $\bar{h}_t \in \argmax_{h \in \mathcal{B}_t} UCB_{h,t}$ be the packet having the largest UCB. Our algorithm, namely \algrs, works as follows: at every round $t\in [T]$, it samples a number $x_t$ in $\left[-1+\ln \frac{UCB_{\bar{h}_t,t}}{LCB_{\underline{h}_t,t}},\ln \frac{UCB_{\bar{h}_t,t}}{LCB_{\underline{h}_t,t}}\right]$, uniformly at random. \algrs sends the packet $f_t$ s.t. 
+\begin{equation}
+\label{eq:f_t_selection}
+     f_t \in \argmin_{\substack{%
+         f \in \mathcal{B}_t \text{ s.\,t.}\ \\
+        \phantom{\text{s.\,t.}}\, UCB_{f,t} \ge e^{x_t} LCB_{\underline{h}_t,t}
+    }} d_f,
+\end{equation}
+\emph{i.e.} the earliest-deadline packet s.t. its UCB is at least $e^{x_t}$ times the LCB of the heaviest packet. This procedure is summarized in Algorithm \ref{alg:alg_rs}.
+\begin{algorithm}[t!]
+\caption{\algrs}
+\label{alg:alg_rs}
+\small
+\begin{algorithmic}[1]
+    \FOR{$t \in [T]$}
+        \STATE Compute UCBs and LCBs for every packet type, obtaining $\{UCB_{i,t}\}_{i\in [K]}$ and $\{LCB_{i,t}\}_{i\in [K]}$
+        \STATE Receive new packets
+        \STATE Identify $\underline{h}_t \in \argmax_{h \in \mathcal{B}_t} LCB_{h,t}$ and $\bar{h}_t \in \argmax_{h \in \mathcal{B}_t} UCB_{h,t}$.
+        \STATE Sample a number $x_t$ from $\left[-1+\ln \frac{UCB_{\bar{h}_t,t}}{LCB_{\underline{h}_t,t}},\ln \frac{UCB_{\bar{h}_t,t}}{LCB_{\underline{h}_t,t}}\right]$
+        \STATE Schedule $f_t$ according to Equation \eqref{eq:f_t_selection}
+        % \STATE Schedule $
+        %      f_t \in \argmin_{\substack{%
+        %          f \in \mathcal{B}_t \text{ s.\,t.}\ \\
+        %         \phantom{\text{s.\,t.}}\, UCB_{f,t} \ge e^{x_t} LCB_{\underline{h}_t,t}
+        %     }} d_f$.
+    \ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+\begin{restatable}[Upper Bound for the $\frac{e}{e-1}$-regret of \algrs]{theorem}{upperboundlearnrandoms}
+\label{thr:upperboundrs}
+     In $s$-bounded $K$-OPSD instances where randomization is allowed, \algrs satisfies
+    \begin{equation}
+        \mathbb{E}[\Gopt] \le \frac{e}{e-1} \mathbb{E}[\Galgrs] + \widetilde{\mathcal{O}}\left(\sqrt{KT}\right),
+    \end{equation}
+    for every $s >1$.
+\end{restatable}
+The quantity $\frac{e}{e-1}$ is bigger than $\frac{5}{4}$, being the lower bound for the competitive ratio for randomized algorithms. However, it is an open question whether there exists an algorithm achieving a smaller-than-$\frac{e}{e-1}$ upper bound for any $s$-bounded instance, with arbitrary $s$. Our result matches the best existing upper bound while including learning, which poses an additional difficulty. Future advancements in the packet scheduling literature may lead to algorithms with sharper upper bounds on the competitive ratio, paving the way for their learning counterparts. Note that, while deterministic algorithms can achieve $\alpha$-no-regret using the optimism principle, randomized algorithms require a more complex estimation procedure. The involvement of randomization based on the ratio between unknown quantities leads to the usage of LCBs, together with UCBs.

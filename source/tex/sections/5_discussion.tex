@@ -1,0 +1,26 @@
+\section{Final Remarks and Future Directions}
+This is the first work exploring the interplay between bandit learning and online packet scheduling with deadlines. We introduce the $K$-OPSD problem, a theoretical framework that is motivated by applications such as QoS buffer management and digital advertising. We show that $K$-OPSD strictly generalizes the $K$-armed sleeping bandit problem, and develop a theory that naturally extends existing algorithms from sleeping bandits to $K$-OPSD.
+%To do so, we face multiple technical challenges.
+
+\input{sections/challenges}
+
+% Our algorithm \algtheta improves over the best existing competitive ratio for deterministic algorithms when $K<\infty$: this result is of independent interest for the OPSD literature as it generalizes the well-known $\texttt{EDF}_{\beta}$ approach. We prove that nearly-optimal learning can be done with deterministic algorithms in $2$-bounded $K$-OPSD, providing matching upper and lower bounds. Finally, we shift our focus to randomized algorithms and propose two novel algorithms achieving $\alpha$-no-regret with a competitive ratio that matches the literature state-of-the-art.
+% We study bandit learning in the Packet Scheduling with Deadlines problem. First, we show that using a reduction to sleeping bandits, it is possible to achieve sublinear $C_s$-regret for $s$-Bounded Delay $K$-OPSD, where $C_s \in [\Phi, 2)$, and $C_s = \Phi$ for $s\in \{2, 3\}$. Then, we explore two ways to beat the $\Phi$ competitive ratio: (a) using the finite $K$ types for deterministic algorithms, and (b) using randomisation. For deterministic algorithms under finite $K$ types, and $2$-Bounded Delay, we propose a novel algorithm \algtheta that beats the $\Phi$ competitive ratio without learning. This algorithm can be of independent interest to the packet scheduling community. We also propose a learning version \algthetalearn that achieves an $O(\sqrt{KT})$ $\theta_K$ regret. We also complement this section with an $\Omega(\sqrt{T})$ lower bound on the worst-case $\theta_k$-regret of any algorithm, proving the tight dependence on $T$ of our $\theta_K$-regret. For randomized algorithms, we achieve sublinear $\frac{5}{4}$-regret in $2$-Bounded instances, and sublinear  $\frac{e}{e-1}$-regret in $s$-bounded Instances for $s> 2$. All our results show that learning is possible in packet scheduling problems using variants based on upper and lower confidence bounds on the real weights.
+\subsection{Future Directions}
+Many interesting future directions can be explored. First, for deterministic algorithms, providing tight $\Phi$-regret for general instances is a challenging problem. Also, combining both randomized algorithms and the $K$-finite type assumptions can be explored to have competitive ratios even closer to $1$. We conjecture that the competitive ratio can be lowered below $\frac{5}{4}$, up to $\frac{7}{6} =  1.1\bar{6}$ when $K=2$, employing a similar lower-bound matching algorithm over the construction Theorem 4 of \cite{chin2003online}. Finally, additional inter-packet structure can be further explored, developing models resembling linear bandits and/or contextual bandits. All these steps towards generalization are interesting and technically challenging, but can be well-motivated by real-world applications.
+
+% Summary: introducin $K$-OPSD learning problem. 
+% Providing sublinear $C_s$-regret for general $s$-Bounded, where $C_s \in [\phi, 2)$
+% Breaking the $\Phi$ barrier, utilising the finite $K$ type assumptions for deterministic algorithms, and randomisation.
+
+% Limitations (needed by the neurips checklist):
+
+% Future work: Adding structure to the learning problem, to go beyond the finite $K$ types assumption.
+
+
+
+
+
+
+%% To add in acks 
+% We thank Jean-Hugues Doussain (Criteo) for useful discussions on the motivating problem.

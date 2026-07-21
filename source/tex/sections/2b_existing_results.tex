@@ -1,0 +1,56 @@
+\subsection{Existing Results and Summary of Contributions}
+
+\begin{table*}[t!]
+\centering
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{llll}
+\toprule
+\textbf{Setting} & \makecell{\textbf{Algorithm} \\ \textbf{Type}} & \makecell{\textbf{OPSD} \\ \textbf{Competitive Ratio} }&  \makecell{\textbf{$K$-OPSD}  \\ \textbf{$\alpha$-regret} }\\
+\midrule
+\multirow{2}{*}{\makecell[l]{$1$-bounded \\ (MAB)}}
+  &Det. (upper)          & $1$  & $R_{1,T} \le \widetilde{\mathcal{O}}\left(\sqrt{KT}\right)$ 
+  ~\cite{kleinberg2010regret}           \\
+  \addlinespace[-2pt]
+  & Det. (lower)           & $1$  & $R_{1,T} \ge \Omega\left(\sqrt{KT}\right)$ ~\cite{kleinberg2010regret}\\
+\midrule
+\multirow{4}{*}{$2$-bounded}
+%   & \multirow{2}{*}{Det. (upper)}           & $\Phi$~~~~\cite{kesselman2001buffer}   & 
+%   \multirowcell{2}[-0.5ex][l]{\cellcolor{gray!20}$R_{\theta_K, T} \le \widetilde{\mathcal{O}}\bigl(\sqrt{KT}\bigr),~~\theta_K < \Phi$}
+% \\
+%   & & \cellcolor{gray!20}$\theta_K \stackrel{K \rightarrow \infty}{\rightarrow}\Phi$ & \\
+  & Det. (upper) & \cellcolor{gray!20}$\theta_K \stackrel{K \rightarrow \infty}{\rightarrow}\Phi, ~~  (\Phi$~~\cite{kesselman2001buffer})  & \cellcolor{gray!20}$R_{\theta_K, T} \le \widetilde{\mathcal{O}}\bigl(\sqrt{KT}\bigr),~~~\theta_K < \Phi$ \\
+  & Det. (lower)          & $\theta_K \stackrel{K \rightarrow \infty}{\rightarrow}\Phi$~~~~\cite{hajek2001competitiveness} & \cellcolor{gray!20} {$R_{\theta_K, T} \ge \Omega\left(\sqrt{T}\right),~~~~~\theta_{K-1} < \Phi$} \\
+  & Rand. (upper)   & $\frac{5}{4} $~~~~\cite{chin2006online}    & \cellcolor{gray!20} $R_{\frac{5}{4}, T} ~\le \widetilde{\mathcal{O}}\left(\sqrt{KT}\right)  $             \\
+  & Rand. (lower)   &$ \frac{5}{4} $~~~~\cite{chin2003online}     & N.A.                \\
+\midrule
+\multirow{2}{*}{$3$-bounded}
+  & Det. (upper)           & $\Phi$~~~~\cite{kesselman2001buffer}   & \cellcolor{gray!20} $R_{\Phi, T} ~\le \widetilde{\mathcal{O}}\left(\sqrt{KT}\right)$              \\
+  & Det. (lower)           & $\Phi$ & \cellcolor{gray!20} $R_{\theta_K, T} \ge \Omega\left(\sqrt{T}\right),~~~\theta_{K-1} < \Phi$ \\
+\midrule
+\multirow{4}{*}{\makecell[l]{Unbounded \\ Slackness}}
+& Det. (upper)           & $\Phi$~~~~\cite{vesely2022competitive} &   N.A.        \\
+& Det. (lower)           & $\Phi$  & \cellcolor{gray!20} $R_{\theta_K, T} ~\ge \Omega\left(\sqrt{T}\right),~~\theta_{K-1} < \Phi$        \\
+& Rand. (upper)   & $\frac{e}{e-1}$~~\cite{chin2006online}  &  \cellcolor{gray!20} $R_{\frac{e}{e-1}, T} \le \widetilde{\mathcal{O}}\left(\sqrt{KT}\right)$  \\
+& Rand. (lower)   & $\frac{5}{4}$ &   N.A. \\
+\bottomrule
+\end{tabular}
+\caption{Comparison of existing results with ours. Results without citations are direct consequences of other entries. Results highlighted in gray are our contributions. The $\widetilde{\mathcal{O}}$ notation hides universal constants and logarithmic factors. The $\Omega$ notation hides universal constants.}
+\label{tab:literature}
+\end{table*}
+
+In Table \ref{tab:literature}, we summarize the existing results in the classic OPSD problem and compare them to our results. The $K$-OPSD setting is novel and unexplored in the literature, thus our bounds on the $\alpha$-regret can only be compared in light of the existing competitive ratios and upper bounds on the regret. However, in the $2$-bounded setting, we improve over existing results when $K<\infty$. As customary in this literature, we distinguish between \textit{deterministic} and \textit{randomized} algorithms. In what follows, we report an overview of our results. Through the paper, we use the $\mathcal{O}$ notation to hide universal constants, and the $\widetilde{\mathcal{O}}$ notation to hide universal constants and logarithms.
+
+In the first part of this paper, we propose deterministic algorithms for the OPSD and the $K$-OPSD setting.
+\begin{itemize}
+    \item In the $2$-bounded and $3$-bounded $K$-OPSD setting, we propose a deterministic algorithm that suffers a $\Phi$-regret upper bounded as $\widetilde{\mathcal{O}}\left(\sqrt{KT}\right)$ (Theorem \ref{prop:reduction}). This upper bound is also provided in an instance-dependent version. In classic Sleeping MABs the best attainable bound on the the regret is in the order of $\widetilde{\mathcal{O}}\left(\sqrt{KT}\right)$ as well, and the competitive ratio matches the best existing one. This result highlights the connection between the $K$-OPSD setting and the Sleeping MAB setting, and the analysis provides insights into how the learning procedure can be decomposed in a meaningful way from the traditional competitive ratio analysis.
+    \item In the $2$-bounded OPSD setting, when the number of distinct weights is $K<\infty$, we provide a novel deterministic algorithm called \algtheta that achieves a competitive ratio of $\theta_K$ (\ref{prop:upperboundtheta}) smaller than the best known competitive ratio of $\Phi$ \cite{hajek2001competitiveness}. Note that $\theta_K \in [\sqrt{2}, \Phi)$ for $K<\infty$ and $\theta_\infty = \Phi$. This upper bound on the competitive ratio is tight according to the lower bound proposed in \cite{hajek2001competitiveness}.
+    \item In the $2$-bounded $K$-OPSD setting, we adapt \algtheta to deal with learning, resulting in \algthetalearn. This deterministic algorithm suffers a $\theta_K$-regret bounded as $\widetilde{\mathcal{O}}\left(\sqrt{KT}\right)$ (Theorem \ref{thr:upperbound_thetalearn}), and we prove that this is nearly tight with a lower bound (Theorem \ref{thr:lowerbound}).
+\end{itemize}
+
+We dedicate the second part of this paper to randomized algorithms.
+\begin{itemize}
+    \item  In the $2$-bounded $K$-OPSD setting, we propose \algrtwo, a randomized algorithm that suffers a $\frac{5}{4}$-regret upper bounded as $\widetilde{\mathcal{O}}\left(\sqrt{KT}\right)$ (Theorem \ref{thr:upperboundrtwo}).
+    \item In the $K$-OPSD setting with unbounded slackness, we propose \algrs, an algorithm that suffers a $\frac{e}{e-1}$-regret upper bounded as $\widetilde{\mathcal{O}}\left(\sqrt{KT}\right)$ (Theorem \ref{thr:upperboundrs}).
+\end{itemize}
+In both cases, our bounds match the best existing competitive ratio as well as the tightest regret attainable in Sleeping MABs.
