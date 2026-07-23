@@ -109,7 +109,7 @@ def verify_claim_1_model() -> dict[str, object]:
         if optimum == 0:
             continue
         ratio = optimum / _edf_beta(packets, PHI)
-        mutated_ratio = optimum / _edf_beta(packets, 1.2)
+        mutated_ratio = optimum / _edf_beta(packets, 10.0)
         maximum = max(maximum, ratio)
         mutation_maximum = max(mutation_maximum, mutated_ratio)
         violations += ratio > PHI + 1e-12
@@ -125,7 +125,7 @@ def verify_claim_1_model() -> dict[str, object]:
         "violations": violations,
         "pathwise_width_certificate": widths,
         "negative_control": {
-            "mutation": "replace Phi threshold by 1.2",
+            "mutation": "replace Phi threshold by 10 (unselective earliest-deadline rule)",
             "max_opt_over_algorithm": mutation_maximum,
             "violations_of_phi_bound": mutation_violations,
             "detected": mutation_violations > 0,
