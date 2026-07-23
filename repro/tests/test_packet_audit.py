@@ -8,6 +8,11 @@ from repro.src.proof_certificates import (
     verify_r2_phat_obligations,
     verify_rs_proof_accounting,
 )
+from repro.src.model_check_campaign import (
+    verify_claim_1_model,
+    verify_claim_4_model,
+    verify_claim_5_model,
+)
 
 
 def test_theta_known_values_and_system_residuals():
@@ -52,3 +57,15 @@ def test_analytical_proof_obligations_and_gap():
     rs = verify_rs_proof_accounting()
     assert not rs["source_inequality_holds"]
     assert rs["balanced_negative_control_holds"]
+
+
+def test_exact_model_checks_and_controls():
+    claim_1 = verify_claim_1_model()
+    claim_4 = verify_claim_4_model()
+    claim_5 = verify_claim_5_model()
+    assert claim_1["competitive_core_pass"]
+    assert claim_1["negative_control"]["detected"]
+    assert claim_4["competitive_core_pass"]
+    assert claim_4["negative_control"]["detected"]
+    assert claim_5["competitive_core_pass"]
+    assert claim_5["negative_control"]["detected"]
