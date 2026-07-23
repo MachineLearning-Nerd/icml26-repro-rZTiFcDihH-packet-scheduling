@@ -15,6 +15,7 @@ from pathlib import Path
 
 from repro.src.packet_audit import audit
 from repro.src.claim_campaign import run_direct_campaign
+from repro.src.proof_certificates import run_proof_certificates
 from repro.src.stress_campaign import run_stress_campaign
 
 
@@ -62,6 +63,7 @@ def main() -> int:
     print("=== RUNTIME ===")
     print(json.dumps(runtime, sort_keys=True))
     run_direct_campaign()
+    run_proof_certificates()
     run_stress_campaign()
     print("BASELINE_VERDICT=PASS")
     return 0
