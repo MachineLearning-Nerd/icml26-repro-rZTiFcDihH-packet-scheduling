@@ -1,0 +1,12 @@
+{
+  "claim": 1,
+  "verdict": "BLOCKED",
+  "confidence": "LOW",
+  "exact_model_cells": 6817,
+  "exact_model_max_ratio": 1.25,
+  "stress_max_horizon": 65536,
+  "falsification_instances": 20000,
+  "falsification_best_ratio": 1.3138461538461537,
+  "valid_counterexamples": 0,
+  "negative_control_detected": true
+}

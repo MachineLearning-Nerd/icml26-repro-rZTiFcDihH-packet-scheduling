@@ -2,46 +2,43 @@
 
 ## State
 
-`publication_queued` — full local gate passed and public GitHub handoff is
-complete; the shared drain is the only Hugging Face publisher.
+`release_candidate` — the claim campaign is complete; no Hugging Face or
+default-branch publication has occurred. The next action is one explicit
+publication approval after the final cumulative release-gate run.
 
-## Source and scope
+## Source and compute
 
-- Pinned source target: arXiv `2606.00835v1`.
-- All six anchored claims are literal definitions, algorithms, finite-
-  competitive-ratio constructions, or regret/lower-bound statements in the
-  source. They do not depend on a withheld benchmark, checkpoint, or GPU run.
-- The authors do not provide executable code. The reproduction will therefore
-  be explicitly clean-room and will retain the TeX source, implementations,
-  exhaustive finite instances, independent oracle checks, and destructive
-  controls. No result will be described as an author-code rerun.
+- Paper: arXiv `2606.00835v1`
+- Source SHA-256:
+  `cfecbd50bdaa81a774e044f8ce568ddd25880f39debeb3d81d796f7d05f5534f`
+- Validated baseline: `208fb9372e541152a1062f292163a2c017eaebd4`
+- Fixed command: `uv run --frozen python -m repro.run_all`
+- Environment: Python 3.12.11, `uv`, one repository `.venv`, committed lock
+- Compute: local Apple arm64 CPU only; no HF cpu-upgrade and no GPU
+- Protected Space revision:
+  `DineshAI/rZTiFcDihH@8f84eab5754de43ee08dfc1bb9a792cde93cc6ab`
 
-## Planned claim gates
+## Claim status
 
-1. EDF-Φ UCB scheduling and its finite packet-instance regret behaviour.
-2. Solve the source θ_K system, enumerate the 2-bounded competitive cases, and
-   independently compute the offline optimum.
-3. Verify ALG^θ,U and the stated √T lower-bound gadget on source-defined cells.
-4. Verify the randomized 2-bounded ALG^R2 decision probabilities and 5/4
-   finite potential inequality across all small packet states.
-5. Verify the randomized s-bounded construction and e/(e−1) potential/rate
-   certificate on its literal finite state space.
-6. Exhaustively map 1-bounded K-OPSD arrivals to sleeping-bandit availability
-   sets and compare gain/regret definitions.
+| Claim | Verdict | Confidence | Basis |
+| --- | --- | --- | --- |
+| 1 | BLOCKED | LOW | three aligned verification routes and no counterexample; universal charging proof incomplete |
+| 2 | FALSIFIED | HIGH | OPT/ALG=1.6 > theta_3=1.5 |
+| 3 | FALSIFIED | HIGH | bounded-reward family has linear theta-regret |
+| 4 | BLOCKED | LOW | exact 1.25-tight core; full learning coupling incomplete |
+| 5 | BLOCKED | LOW | accounting repaired; literal zero-LCB initialization undefined |
+| 6 | VERIFIED | HIGH | parameterized bijection and reward coupling |
 
-## Completed gate
+Every LOW-confidence claim completed analytical, long-horizon, exact-model,
+and dedicated falsification routes. A missing counterexample was not converted
+to verification.
 
-- Pinned source archive and SHA-256 are retained under `source/` and `outputs/`.
-- The clean-room executable has 2/2 tests passing and retains raw claim output.
-- C1, C4, C5, and C6 have source-rule checks; C2 and C3 are explicitly
-  falsified with destructive controls rather than misreported as verified.
-- Trackio has the required index, per-claim pages, Methods, Negative controls,
-  and Conclusion; captured commands are relative.
-- Public GitHub commit is `e6dca3f917fecff47bffe7f88d3056970ec89e00`.
+## Publication gate
 
-FULL_GATE_READY: rZTiFcDihH
+The candidate is text-only and additive. The judged 26-file set is a subset of
+the 42-file candidate; unchanged old hashes match, the old index is a prefix of
+the new index, and all old navigation nodes are preserved. The exact upload
+allowlist and SHA-256 manifest are under `release/`.
 
-## Next action
-
-The canonical enqueue handoff is next. Do not create or publish a Hugging Face
-Space directly; wait for the shared drain and then verify its public readback.
+Current live judged score: **6/12**. No score increase is claimed before a new
+live judge verdict.

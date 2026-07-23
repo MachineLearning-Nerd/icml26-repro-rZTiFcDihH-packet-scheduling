@@ -1,14 +1,33 @@
 # Evidence map
 
-| Claim | Outcome | Executed evidence | Independent check / control |
-|---|---|---|---|
-| C1 EDF-Phi | finite source-equivalent check | 793 ordered 2-bounded packet cells, max OPT/EDF ratio 1.2857 | offline dynamic-programming scheduler, not the online rule |
-| C2 ALG^theta | **falsified** | Source theta system closes for K=2..8; a valid K=3 cell has OPT=8 and ALG=5 | independent DP oracle; 1.6 > theta_3=1.5 |
-| C3 theta learning lower bound | **falsified** | source static audit pins `X_p in [0,1]` and proof `X_0 ~ N(1,sigma)` | direct domain incompatibility, no numerical approximation |
-| C4 ALG^R2 | source-rule check | 100 admissible UCB/LCB cells, all p-hat values in [1/5,1] | all branch boundaries enumerated |
-| C5 ALG^Rs | source-rule check | 8,704 UCB/LCB/quantile cells | selected packet always meets Eq. (f_t_selection) threshold |
-| C6 sleeping-bandit reduction | verified finite reduction | all 120 nonempty availability sets through K=6 | direct set-to-buffer and action-set bijection |
+| Claim | Verdict | Direct evidence | Independent check / negative control |
+| --- | --- | --- | --- |
+| C1 EDF-Phi^L | BLOCKED | 6,817 exact states; T=65,536 literal stress; 20,000-instance falsification search | separate offline DP; pathwise width certificate; mutated bound rejected |
+| C2 ALG^theta | FALSIFIED | valid K=3 cell has OPT=8 and ALG=5 | independent DP and theta residual; gain mutation rejected |
+| C3 ALG^theta,U | FALSIFIED | bounded deterministic rewards give regret/T=0.0330093 and slope 1.151 | separate per-block lower bound; zero-regret mutation rejected |
+| C4 ALG^R2 | BLOCKED | exact 1.25-tight cell; 16 SMT obligations; 80-seed T=32,768 stress | exact recursion matches 20,000-seed checker; p=0 mutation rejected |
+| C5 ALG^Rs | BLOCKED | 4,096 exact states; 80-seed stress; pathwise accounting repair | separate offline DP; always-heaviest mutation rejected; zero-LCB start unresolved |
+| C6 reduction | VERIFIED | parameterized construction and K=257,T=1000 round-trip | quantified mismatch query unsat; deadline mutation rejected |
 
-The finite sweeps validate literal executable components and deliberately do
-not claim to prove general asymptotic theorems. The two falsifications are
-reported because they invalidate their corresponding literal source claims.
+The fixed command is:
+
+```text
+uv run --frozen python -m repro.run_all
+```
+
+It generates final claim bundles under
+`.openresearch/artifacts/final_claims/claim_<n>/`, each containing:
+
+- `claim_contract.json`
+- `source_audit.md`
+- `method.md`
+- `raw_results.json`
+- `independent_checker_output.json`
+- `negative_control_output.json`
+- `exact_command_environment.json`
+- `limitations.md`
+- `EVAL.md`
+
+The illustrated article is
+`reports/packet-scheduling-claim-audit-2026-07-23/report.md`. The text-only
+Hugging Face payload, exact allowlist, and manifest are under `release/`.

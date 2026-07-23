@@ -1,0 +1,11 @@
+Fixed command: uv run --frozen python -m repro.run_all
+Environment manager: uv
+Python: 3.12.11
+Dependency lock: repository uv.lock
+Compute: local Apple arm64 CPU
+Hugging Face compute used: none
+GPU used: none
+Compute cost: $0
+Paper source: https://export.arxiv.org/e-print/2606.00835
+Paper SHA-256: cfecbd50bdaa81a774e044f8ce568ddd25880f39debeb3d81d796f7d05f5534f
+Judged Space revision preserved: 8f84eab5754de43ee08dfc1bb9a792cde93cc6ab

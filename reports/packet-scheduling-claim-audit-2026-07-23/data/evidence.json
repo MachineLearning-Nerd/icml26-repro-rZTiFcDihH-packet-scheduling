@@ -1,0 +1,31 @@
+{
+  "claim_2": {
+    "theta_3": 1.5,
+    "algorithm_gain": 5.0,
+    "offline_gain": 8.0,
+    "ratio": 1.6
+  },
+  "claim_3": {
+    "horizon": [1024, 4096, 16384, 65536],
+    "regret": [-23.700000000003115, 62.25000000005775, 438.44999999914035, 2163.300000013951],
+    "regret_per_round": [-0.023144531250003042, 0.0151977539062641, 0.02676086425776003, 0.033009338379119124],
+    "last_loglog_slope": 1.1513747564294028
+  },
+  "competitive_models": {
+    "claims": ["Claim 1", "Claim 4", "Claim 5"],
+    "exact_max_ratio": [1.25, 1.25, 1.2644404408226564],
+    "falsification_search_max_ratio": [1.3138461538461537, 1.1870503597122302, 1.3140687938906177],
+    "paper_alpha": [1.618033988749895, 1.25, 1.5819767068693265]
+  },
+  "stress": {
+    "horizon": [512, 2048, 8192, 32768],
+    "claim_4_regret_over_sqrt_KT": [-2.4000000000000536, -3.0342773437494457, -3.397558593754325, -3.744335937465744],
+    "claim_5_beta_sum_over_sqrt_KT": [3.153684839773807, 3.6781767902776297, 4.158255706296109, 4.575721859612455]
+  },
+  "route_matrix": {
+    "claims": ["C1", "C4", "C5"],
+    "routes": ["Algebra / SMT", "Long-horizon", "Exact model", "Falsification"],
+    "values": [[2, 2, 2, 1], [2, 2, 2, 1], [0, 2, 2, 1]],
+    "labels": [["partial", "aligned", "aligned", "no cex"], ["partial", "tight", "tight", "no cex"], ["proof gap", "aligned*", "repair", "no cex"]]
+  }
+}

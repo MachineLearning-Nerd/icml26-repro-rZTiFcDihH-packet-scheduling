@@ -18,6 +18,7 @@ from repro.src.claim_campaign import run_direct_campaign
 from repro.src.falsification_campaign import run_falsification_campaign
 from repro.src.model_check_campaign import run_model_check_campaign
 from repro.src.proof_certificates import run_proof_certificates
+from repro.src.release_gate import run_release_gate
 from repro.src.stress_campaign import run_stress_campaign
 
 
@@ -69,6 +70,7 @@ def main() -> int:
     run_stress_campaign()
     run_model_check_campaign()
     run_falsification_campaign()
+    run_release_gate()
     print("BASELINE_VERDICT=PASS")
     return 0
 

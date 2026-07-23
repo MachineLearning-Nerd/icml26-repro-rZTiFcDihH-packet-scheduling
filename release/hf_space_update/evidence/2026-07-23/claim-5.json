@@ -1,0 +1,16 @@
+{
+  "claim": 5,
+  "verdict": "BLOCKED",
+  "confidence": "LOW",
+  "alpha": 1.5819767068693265,
+  "proof_gap_counts": [9999, 1],
+  "proof_gap_actual": 1.0,
+  "proof_gap_claimed": 0.01414213562373095,
+  "exact_states": 4096,
+  "exact_max_ratio": 1.2644404408226564,
+  "falsification_instances": 12000,
+  "falsification_best_ratio": 1.3140687938906177,
+  "valid_counterexamples": 0,
+  "zero_lcb_initialization_defined": false,
+  "negative_control_detected": true
+}

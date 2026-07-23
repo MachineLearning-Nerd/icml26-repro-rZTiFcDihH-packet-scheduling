@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "title": "Repro - Online Packet Scheduling with Deadlines and Learning",
+  "emoji": "🎯",
+  "space_id": "DineshAI/rZTiFcDihH",
+  "paper": {
+    "arxiv_id": "2606.00835v1",
+    "openreview_id": "rZTiFcDihH"
+  },
+  "tags": [
+    "icml2026-repro",
+    "paper-rZTiFcDihH"
+  ],
+  "updated_at": "2026-07-23T00:00:00+00:00",
+  "root": {
+    "slug": "index",
+    "title": "Repro - Online Packet Scheduling with Deadlines and Learning",
+    "file": "pages/index.md",
+    "children": [
+      {
+        "slug": "methods",
+        "title": "Methods",
+        "file": "pages/methods/page.md",
+        "children": []
+      },
+      {
+        "slug": "conclusion",
+        "title": "Conclusion",
+        "file": "pages/conclusion/page.md",
+        "children": []
+      },
+      {
+        "slug": "claim-opsd-regret",
+        "title": "Claims — OPSD sqrt(KT) regret + sleeping bandit",
+        "file": "pages/claim-opsd-regret/page.md",
+        "children": []
+      },
+      {
+        "slug": "campaign-2026-07-23",
+        "title": "Claim-by-claim campaign — 2026-07-23",
+        "file": "pages/campaign-2026-07-23/page.md",
+        "children": [
+          {
+            "slug": "campaign-2026-07-23-claim-1",
+            "title": "Claim 1 — EDF_Phi^L",
+            "file": "pages/campaign-2026-07-23/claim-1.md",
+            "children": []
+          },
+          {
+            "slug": "campaign-2026-07-23-claim-2",
+            "title": "Claim 2 — ALG^theta",
+            "file": "pages/campaign-2026-07-23/claim-2.md",
+            "children": []
+          },
+          {
+            "slug": "campaign-2026-07-23-claim-3",
+            "title": "Claim 3 — ALG^theta,U",
+            "file": "pages/campaign-2026-07-23/claim-3.md",
+            "children": []
+          },
+          {
+            "slug": "campaign-2026-07-23-claim-4",
+            "title": "Claim 4 — ALG^R2",
+            "file": "pages/campaign-2026-07-23/claim-4.md",
+            "children": []
+          },
+          {
+            "slug": "campaign-2026-07-23-claim-5",
+            "title": "Claim 5 — ALG^Rs",
+            "file": "pages/campaign-2026-07-23/claim-5.md",
+            "children": []
+          },
+          {
+            "slug": "campaign-2026-07-23-claim-6",
+            "title": "Claim 6 — sleeping-bandit reduction",
+            "file": "pages/campaign-2026-07-23/claim-6.md",
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  "agent_view_tokens": 2600,
+  "revision": "1784649546221912769"
+}

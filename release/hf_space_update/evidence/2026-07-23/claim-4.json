@@ -1,0 +1,13 @@
+{
+  "claim": 4,
+  "verdict": "BLOCKED",
+  "confidence": "LOW",
+  "tight_ratio": 1.25,
+  "tight_cell": {"mu_a": 0.4, "mu_b": 0.8, "p_a": 0.4, "expected_gain": 0.96, "optimum": 1.2},
+  "smt_obligations": 16,
+  "exact_probability_cells": 10000,
+  "falsification_instances": 10000,
+  "falsification_best_ratio": 1.1870503597122302,
+  "valid_counterexamples": 0,
+  "negative_control_detected": true
+}

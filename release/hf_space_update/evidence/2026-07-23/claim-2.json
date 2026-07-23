@@ -1,0 +1,13 @@
+{
+  "claim": 2,
+  "verdict": "FALSIFIED",
+  "confidence": "HIGH",
+  "K": 3,
+  "theta_3": 1.5,
+  "algorithm_gain": 5.0,
+  "offline_gain": 8.0,
+  "ratio": 1.6,
+  "packets": [[1,1,1.0,2],[1,2,1.0,2],[2,2,1.0,2],[2,3,2.0,1],[3,3,2.0,1],[3,4,3.0,0]],
+  "independent_checker_pass": true,
+  "negative_control_detected": true
+}

@@ -1,0 +1,13 @@
+{
+  "claim": 3,
+  "verdict": "FALSIFIED",
+  "confidence": "HIGH",
+  "K": 3,
+  "theta_3": 1.5,
+  "means": [0.9, 0.6, 0.3],
+  "reward_support": [0.0, 1.0],
+  "tail_regret_per_round": 0.033009338379119124,
+  "last_loglog_slope": 1.1513747564294028,
+  "independent_checker_pass": true,
+  "negative_control_detected": true
+}

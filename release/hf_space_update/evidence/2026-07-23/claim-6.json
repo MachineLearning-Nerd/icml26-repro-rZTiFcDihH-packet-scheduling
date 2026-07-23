@@ -1,0 +1,10 @@
+{
+  "claim": 6,
+  "verdict": "VERIFIED",
+  "confidence": "HIGH",
+  "quantified_bijection_status": "unsat",
+  "large_round_trip": {"K": 257, "T": 1000, "pass": true},
+  "coupled_gain_pass": true,
+  "independent_checker_pass": true,
+  "negative_control_detected": true
+}
