@@ -14,6 +14,7 @@ import time
 from pathlib import Path
 
 from repro.src.packet_audit import audit
+from repro.src.claim_campaign import run_direct_campaign
 
 
 ARTIFACT_DIR = Path(".openresearch/artifacts/baseline")
@@ -59,6 +60,7 @@ def main() -> int:
     print(json.dumps(payload, sort_keys=True))
     print("=== RUNTIME ===")
     print(json.dumps(runtime, sort_keys=True))
+    run_direct_campaign()
     print("BASELINE_VERDICT=PASS")
     return 0
 

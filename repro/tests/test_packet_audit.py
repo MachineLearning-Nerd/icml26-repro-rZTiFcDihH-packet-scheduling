@@ -1,4 +1,8 @@
 from repro.src.packet_audit import PHI, audit, theta_system
+from repro.src.claim_campaign import (
+    run_theta_learning_counterexample,
+    verify_claim_6,
+)
 
 
 def test_theta_known_values_and_system_residuals():
@@ -20,3 +24,18 @@ def test_full_claim_audit_controls():
     assert result["C4_randomized_R2"]["probability_range_pass"]
     assert result["C5_randomized_Rs"]["threshold_pass"]
     assert result["C6_sleeping_bandit_reduction"]["bijection_pass"]
+
+
+def test_theta_learning_counterexample_becomes_linear():
+    small = run_theta_learning_counterexample(1024)
+    large = run_theta_learning_counterexample(4096)
+    assert small["theta_regret"] > 0
+    assert large["theta_regret"] > 3.5 * small["theta_regret"]
+    assert large["theta_regret"] / large["horizon"] > 0.02
+
+
+def test_parameterized_sleeping_bandit_reduction():
+    result = verify_claim_6()
+    assert result["verdict"] == "VERIFIED"
+    assert result["quantified_bijection_status"] == "unsat"
+    assert result["negative_control_detected"]
