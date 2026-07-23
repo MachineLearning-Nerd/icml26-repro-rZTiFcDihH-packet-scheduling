@@ -3,6 +3,11 @@ from repro.src.claim_campaign import (
     run_theta_learning_counterexample,
     verify_claim_6,
 )
+from repro.src.proof_certificates import (
+    verify_edf_phi_obligations,
+    verify_r2_phat_obligations,
+    verify_rs_proof_accounting,
+)
 
 
 def test_theta_known_values_and_system_residuals():
@@ -39,3 +44,11 @@ def test_parameterized_sleeping_bandit_reduction():
     assert result["verdict"] == "VERIFIED"
     assert result["quantified_bijection_status"] == "unsat"
     assert result["negative_control_detected"]
+
+
+def test_analytical_proof_obligations_and_gap():
+    assert verify_edf_phi_obligations()["optimism_charge_smt_unsat"]
+    assert verify_r2_phat_obligations()["all_16_smt_obligations_unsat"]
+    rs = verify_rs_proof_accounting()
+    assert not rs["source_inequality_holds"]
+    assert rs["balanced_negative_control_holds"]
