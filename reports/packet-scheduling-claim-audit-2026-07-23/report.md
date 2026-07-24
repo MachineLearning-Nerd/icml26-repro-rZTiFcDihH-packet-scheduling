@@ -146,10 +146,11 @@ release-validation commands.
 | Faithful stress | [`orx/faithful-adversarial-stress`](https://github.com/MachineLearning-Nerd/icml26-repro-rZTiFcDihH-packet-scheduling/tree/orx/faithful-adversarial-stress) | `74b96f65-3615-413d-9933-56ac9dbfb2be` | `12fdbbd` | long-horizon alignment |
 | Exact model | [`orx/integrated-exact-route-audit`](https://github.com/MachineLearning-Nerd/icml26-repro-rZTiFcDihH-packet-scheduling/tree/orx/integrated-exact-route-audit) | `1520ef60-bfa5-45fa-b9ed-008c1d68e0ed` | `60cac64` | exact cores pass |
 | Falsification route | [`orx/dedicated-falsification-search`](https://github.com/MachineLearning-Nerd/icml26-repro-rZTiFcDihH-packet-scheduling/tree/orx/dedicated-falsification-search) | `487674a8-55ed-4f57-85ce-87c41696983f` | `578c98f` | C1/C4/C5 remain blocked |
+| Release candidate | [`orx/release-candidate-synthesis`](https://github.com/MachineLearning-Nerd/icml26-repro-rZTiFcDihH-packet-scheduling/tree/orx/release-candidate-synthesis) | `672aa381-15eb-41f1-87ac-83d13322eb5a` | `17c7d29` | cumulative regression and release gate pass |
 
 All formal compute used local CPU; Hugging Face cpu-upgrade and GPU hardware
-were not used. The accepted run durations before the release-candidate run
-total 20m44s, with $0 compute cost.
+were not used. Accepted runs total 30m07s; including three early verifier-control
+failures, formal local compute totals 30m52s, with $0 compute cost.
 
 ## Assessment
 
@@ -160,7 +161,9 @@ faithful evidence that may improve their judge treatment, but the campaign
 does not claim universal verification. Claim 5 remains blocked by an exact
 algorithm-definition gap even though its proof accounting can be repaired.
 
-The conservative forecast is 9/12; the best-supported possible outcome is
-11/12 if the judge credits the substantial Claim 1 and Claim 4 evidence. These
-are forecasts only. The live score remains 6/12 until a new Space revision is
-published with approval and judged.
+The conservative projected range is 8–9/12; the best-supported possible
+outcome is 9/12. This forecast assigns no new points to the three `BLOCKED`
+claims, regardless of how much supporting evidence their routes produced.
+These are forecasts only. The candidate is published at Space revision
+`3591f28e98d375687f4ac00fb48686edd1ef714f` and awaits judgment; the live score
+remains 6/12 until a new judge verdict exists.

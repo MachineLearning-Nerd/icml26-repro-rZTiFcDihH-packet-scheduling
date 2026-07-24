@@ -2,9 +2,9 @@
 
 ## State
 
-`release_candidate` — the claim campaign is complete; no Hugging Face or
-default-branch publication has occurred. The next action is one explicit
-publication approval after the final cumulative release-gate run.
+`awaiting_judge` — the claim campaign is complete, the approved additive
+Hugging Face revision is published, and the presentation artifacts are mirrored
+to the default branch. No score increase is claimed before the live judge runs.
 
 ## Source and compute
 
@@ -17,6 +17,8 @@ publication approval after the final cumulative release-gate run.
 - Compute: local Apple arm64 CPU only; no HF cpu-upgrade and no GPU
 - Protected Space revision:
   `DineshAI/rZTiFcDihH@8f84eab5754de43ee08dfc1bb9a792cde93cc6ab`
+- Published candidate revision:
+  `DineshAI/rZTiFcDihH@3591f28e98d375687f4ac00fb48686edd1ef714f`
 
 ## Claim status
 
@@ -33,12 +35,13 @@ Every LOW-confidence claim completed analytical, long-horizon, exact-model,
 and dedicated falsification routes. A missing counterexample was not converted
 to verification.
 
-## Publication gate
+## Publication verification
 
-The candidate is text-only and additive. The judged 26-file set is a subset of
-the 42-file candidate; unchanged old hashes match, the old index is a prefix of
-the new index, and all old navigation nodes are preserved. The exact upload
-allowlist and SHA-256 manifest are under `release/`.
+The published update is text-only and additive. The judged 26-file set is a
+subset of the 42-file published revision; unchanged old hashes match, the old
+index is a prefix of the new index, and all old navigation nodes are preserved.
+All 18 uploaded files independently match the approved SHA-256 manifest under
+`release/`.
 
 Current live judged score: **6/12**. No score increase is claimed before a new
 live judge verdict.

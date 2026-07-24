@@ -45,6 +45,7 @@ orx exp run 9c6e12d5-4923-4b77-afde-e86bd37f0d81 --backend local
 orx exp run a6be341d-5a33-4273-a45b-9e6731493058 --backend local
 orx exp run 024366a1-df74-47fb-bdfc-7262af94a042 --backend local
 orx exp run e27b3b10-3c3d-48eb-9755-ec9f4fc92a58 --backend local
+orx exp run 100a2c51-1430-434c-89fc-5eb329af1118 --backend local
 ```
 
 Each launch was followed by:
@@ -58,8 +59,9 @@ The accepted run IDs are `79676866-910c-4895-b2d9-4603c3fa547a`,
 `cb396f27-7f46-43a9-afad-d98731824cd1`,
 `581f9bda-04a5-4356-a9ef-db0f8aa9ce57`,
 `74b96f65-3615-413d-9933-56ac9dbfb2be`,
-`1520ef60-bfa5-45fa-b9ed-008c1d68e0ed`, and
-`487674a8-55ed-4f57-85ce-87c41696983f`.
+`1520ef60-bfa5-45fa-b9ed-008c1d68e0ed`,
+`487674a8-55ed-4f57-85ce-87c41696983f`, and
+`672aa381-15eb-41f1-87ac-83d13322eb5a`.
 
 Three early verifier-control runs failed and remain visible:
 `11447c22-d73b-4cda-b69e-5df96ef42ad4`,
@@ -76,5 +78,7 @@ uv run --frozen python release/hf_space_update/repro/src/verify_campaign_2026072
 uv run --frozen python repro/verify_space_subset.py --judged <protected-tree> --candidate <candidate-tree> --out <subset-check.json>
 ```
 
-The `uvx` lint did not modify the locked experiment environment. No Hugging
-Face upload command has been executed.
+The `uvx` lint and isolated Hugging Face client did not modify the locked
+experiment environment. Publication used one `HfApi.create_commit` call with
+the judged SHA as `parent_commit`; the resulting Space revision is
+`3591f28e98d375687f4ac00fb48686edd1ef714f`.

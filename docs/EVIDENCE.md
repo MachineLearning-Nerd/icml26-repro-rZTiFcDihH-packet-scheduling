@@ -30,4 +30,7 @@ It generates final claim bundles under
 
 The illustrated article is
 `reports/packet-scheduling-claim-audit-2026-07-23/report.md`. The text-only
-Hugging Face payload, exact allowlist, and manifest are under `release/`.
+Hugging Face payload, exact allowlist, and manifest are under `release/`. The
+payload was published at Space revision
+`3591f28e98d375687f4ac00fb48686edd1ef714f`; all 18 remote files match the
+manifest, and the protected judged tree remains a subset of that revision.

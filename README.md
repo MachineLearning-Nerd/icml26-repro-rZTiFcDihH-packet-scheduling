@@ -11,7 +11,7 @@ soft-O(sqrt(KT)) behavior. The earlier ALG^theta counterexample is preserved:
 the paper number is theta_3=**1.5**, while the observed OPT/ALG ratio is
 **8/5=1.6**.
 
-The sleeping-bandit reduction is now parameterically verified for arbitrary K
+The sleeping-bandit reduction is now parametrically verified for arbitrary K
 and T. Claims 1, 4, and 5 remain honestly `BLOCKED`: exact models, long-horizon
 stress, analytical certificates, and dedicated falsification searches do not
 replace their universal quantifiers.
@@ -33,7 +33,9 @@ CPU; Hugging Face cpu-upgrade and GPUs were not used. Compute cost was $0.
 Read the [illustrated claim-by-claim report](reports/packet-scheduling-claim-audit-2026-07-23/report.md)
 or the [self-contained marimo tutorial](notebooks/packet_scheduling_reproduction.py).
 The notebook embeds the accepted evidence, so opening it does not rerun the
-18-minute falsification campaign.
+18-minute falsification campaign. The
+[publication and score-forecast record](reports/packet-scheduling-claim-audit-2026-07-23/approval_report.md)
+documents the exact approved release and its remaining risks.
 
 ## Experiment log
 
@@ -41,13 +43,14 @@ The run command below is copied verbatim from every experiment status.
 
 | Branch / experiment | Purpose or change | Exact run command | Assessment / outcome | Compute |
 | --- | --- | --- | --- | --- |
-| `master` | Publication surface | Not run as an experiment (publication surface) | Awaiting approved mirror | — |
+| `master` | Publication surface | Not run as an experiment (publication surface) | Published evidence mirror; awaiting judge | — |
 | [`orx/frozen-judged-baseline`](https://github.com/MachineLearning-Nerd/icml26-repro-rZTiFcDihH-packet-scheduling/tree/orx/frozen-judged-baseline) | Freeze and rerun judged evidence | `uv run --frozen python -m repro.run_all` | Baseline reproduced; C2 preserved | local CPU, 10s |
 | [`orx/faithful-theorem-contracts`](https://github.com/MachineLearning-Nerd/icml26-repro-rZTiFcDihH-packet-scheduling/tree/orx/faithful-theorem-contracts) | Direct C3 and C6 contracts | `uv run --frozen python -m repro.run_all` | C3 FALSIFIED; C6 VERIFIED | local CPU, 10s |
 | [`orx/analytical-proof-certificates`](https://github.com/MachineLearning-Nerd/icml26-repro-rZTiFcDihH-packet-scheduling/tree/orx/analytical-proof-certificates) | SMT and accounting audit | `uv run --frozen python -m repro.run_all` | core obligations pass; C5 proof gap found | local CPU, 10s |
 | [`orx/faithful-adversarial-stress`](https://github.com/MachineLearning-Nerd/icml26-repro-rZTiFcDihH-packet-scheduling/tree/orx/faithful-adversarial-stress) | Literal long-horizon learning rules | `uv run --frozen python -m repro.run_all` | C1/C4/C5 aligned, not universal | local CPU, 55s |
 | [`orx/integrated-exact-route-audit`](https://github.com/MachineLearning-Nerd/icml26-repro-rZTiFcDihH-packet-scheduling/tree/orx/integrated-exact-route-audit) | Exact expectation and finite-state DP | `uv run --frozen python -m repro.run_all` | tight cores pass; initialization unresolved | local CPU, 1m15s |
 | [`orx/dedicated-falsification-search`](https://github.com/MachineLearning-Nerd/icml26-repro-rZTiFcDihH-packet-scheduling/tree/orx/dedicated-falsification-search) | Mandatory fourth routes | `uv run --frozen python -m repro.run_all` | no valid C1/C4/C5 counterexample; all BLOCKED | local CPU, 18m04s |
+| [`orx/release-candidate-synthesis`](https://github.com/MachineLearning-Nerd/icml26-repro-rZTiFcDihH-packet-scheduling/tree/orx/release-candidate-synthesis) | Cumulative regression and release gate | `uv run --frozen python -m repro.run_all` | 7/7 regression tests and release gate pass | local CPU, 9m23s |
 
 Three failed runs are retained in the internal experiment log because they
 caught verifier-control defects before acceptance. No failed run contributes
@@ -80,6 +83,7 @@ uv run marimo run notebooks/packet_scheduling_reproduction.py
 - Validated baseline: `208fb9372e541152a1062f292163a2c017eaebd4`
 - Previous live judged score: 6/12
 - Protected judged Space revision: `8f84eab5754de43ee08dfc1bb9a792cde93cc6ab`
+- Published candidate Space revision: `3591f28e98d375687f4ac00fb48686edd1ef714f`
 
-The live score remains 6/12 until an approved Hugging Face revision is
-published and the judge evaluates it.
+The candidate revision is published and awaiting judge evaluation. The live
+score remains 6/12; no increase is claimed before a new judge verdict.
